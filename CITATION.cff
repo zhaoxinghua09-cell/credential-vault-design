@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use or reference this repository, please cite it using the metadata below."
+title: "统一凭据保险库 · credential-vault-design (Unified Credential Vault)"
+abstract: >-
+  本地零知识凭据保险库：把散落的口令 / 密钥 / 令牌收敛为一个加密库，可恢复不锁死、
+  分级授权、带防篡改审计链；CLI 零网络调用，明文不交给 AI。库文件为标准 .kdbx，
+  双因子解锁，附 8 维安全实测与第三方静态审计报告。
+authors:
+  - family-names: "Zhao"
+    given-names: "Xinghua"
+    name-particle: ""
+    alias: "Steven Zhao"
+    orcid: "https://orcid.org/0009-0001-0512-1237"
+    affiliation: "Independent consultant / SynomosAI"
+version: "2.0.0"
+date-released: "2026-08-25"
+license: MIT
+repository-code: "https://github.com/zhaoxinghua09-cell/credential-vault-design"
+keywords:
+  - credential vault
+  - secret management
+  - password manager
+  - zero-knowledge
+  - local-first
+  - offline
+  - audit trail
+  - agent skill
+preferred-citation:
+  type: software
+  title: "统一凭据保险库 · credential-vault-design"
+  version: "2.0.0"
+  year: 2026
+  license: MIT
+  authors:
+    - family-names: "Zhao"
+      given-names: "Xinghua"
+      orcid: "https://orcid.org/0009-0001-0512-1237"
