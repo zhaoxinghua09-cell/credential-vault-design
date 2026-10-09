@@ -1,0 +1,45 @@
+# 统一凭据保险库 · credential-vault-design
+
+> 本地零知识凭据保险库：把散落的口令 / 密钥 / 令牌收成一个加密库，可恢复不锁死、分级授权、带防篡改审计链；CLI 零网络调用，明文不交给 AI。
+
+## 这是什么
+
+`credential-vault-design` 是一个可真实运行的本地凭据保险库（Agent Skill + Python CLI）。库文件为标准 `.kdbx`，密文落盘；主密码 + 密钥文件双因子解锁；`backup` 输出 SHA-256 用于事后比对防篡改。配套 8 维安全实测（全部 5.0）与雷达图。
+
+## 关键事实
+
+- 许可：MIT
+- 版本：2.0.0
+- 零知识边界：磁盘库文件明文凭据泄露 0 处（实测）
+- 网络面：CLI 无任何网络调用（无 requests / urllib / socket / subprocess）
+- 第三方静态审计：95 / 100，P0 风险 0 个（腾讯云鼎方法论，2026-08-26）
+- 依赖：`pykeepass>=4.0.3`（GPL-3.0）、`cryptography>=42.0.0`
+
+## 文档
+
+- [README（中文）](https://github.com/zhaoxinghua09-cell/credential-vault-design/blob/main/README.md)
+- [README (English)](https://github.com/zhaoxinghua09-cell/credential-vault-design/blob/main/README.en.md)
+- [SKILL.md（技能定义与触发词）](https://github.com/zhaoxinghua09-cell/credential-vault-design/blob/main/SKILL.md)
+- [SECURITY.md（安全策略与漏洞上报）](https://github.com/zhaoxinghua09-cell/credential-vault-design/blob/main/SECURITY.md)
+- [NOTICE（第三方依赖许可）](https://github.com/zhaoxinghua09-cell/credential-vault-design/blob/main/NOTICE)
+- [ATTESTATION.md（权属证明与包指纹）](https://github.com/zhaoxinghua09-cell/credential-vault-design/blob/main/ATTESTATION.md)
+
+## 快速开始
+
+```bash
+git clone https://github.com/zhaoxinghua09-cell/credential-vault-design.git
+cd credential-vault-design
+python -m venv .venv && .venv\Scripts\activate   # Windows；macOS/Linux 用 source .venv/bin/activate
+pip install -r tools/requirements.txt
+python tools/vault_cli.py --help
+```
+
+命令：`create` · `add` · `list` · `get` · `remove` · `backup`
+
+## 适用场景
+
+个人凭据收拢 · 团队最小权限凭据分发 · AI Agent 需要凭据但不得见明文 · 本地优先 / 离线环境。
+
+## 许可与权利
+
+MIT。引用请标注仓库链接与权利人「赵兴华 / Steven Zhao·China」。MedXpert、SynomosAI、LGD 均为未注册实体、未注册商标的项目标识。详见 `README.md` 的「许可说明 · License Notice」。
