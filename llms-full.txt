@@ -1,0 +1,109 @@
+# 统一凭据保险库 · credential-vault-design — llms-full.txt
+
+> 面向 AI 检索/摄入的完整说明。本文件汇总 README（中文/英文）、SKILL.md 要点与安全实测数据，便于一次性摄入。
+
+## 1. 一句话定位
+
+把散落各处的口令 / 密钥 / 令牌收敛为一个**本地零知识**加密保险库：可恢复不锁死、分级授权、带防篡改审计链；CLI **零网络调用**，明文不交给 AI。
+
+## 2. 基本信息
+
+| 项 | 值 |
+|---|---|
+| 名称 | credential-vault-design（统一凭据保险库） |
+| 类型 | Agent Skill + Python CLI |
+| 版本 | 2.0.0 |
+| 许可 | MIT |
+| 署名 | 诺卫(Phylax)@SynomosAI |
+| 权利人 | 赵兴华 / Steven Zhao·China（见 README「许可说明」） |
+| ORCID | 0009-0001-0512-1237 |
+| 库格式 | 标准 `.kdbx`（桌面/移动主流客户端可读） |
+| 依赖 | `pykeepass>=4.0.3`（GPL-3.0）、`cryptography>=42.0.0` |
+
+> 权利与品牌：MedXpert、SynomosAI、LGD 均为**未申请实体注册、未申请商标注册**的项目标识，出现仅作来源标识。
+
+## 3. 解决什么问题
+
+1. **散**：口令、API Key、授权码分散在浏览器、`.env`、笔记、聊天记录 → 收敛为一个本地加密库。
+2. **怕给 AI 看**：AI 要用凭据但不得见明文 → 零知识边界：密文落盘，明文只在本机内存。
+3. **怕锁死**：主密码遗失即无法解锁（加密本质），但可用带 SHA-256 的备份核对完整性、避免静默损坏。
+4. **怕说不清**：库文件任一字节改动哈希即变，可与历史备份比对发现篡改。
+
+## 4. 快速开始
+
+```bash
+git clone https://github.com/zhaoxinghua09-cell/credential-vault-design.git
+cd credential-vault-design
+python -m venv .venv
+.venv\Scripts\activate          # Windows
+# source .venv/bin/activate     # macOS / Linux
+pip install -r tools/requirements.txt
+python tools/vault_cli.py --help
+```
+
+CLI 子命令（`tools/vault_cli.py`）：
+
+| 命令 | 作用 |
+|---|---|
+| `create` | 新建保险库（设主密码） |
+| `add` | 添加条目 |
+| `list` | 列出条目（不显示密码） |
+| `get` | 取出条目某字段 |
+| `remove` | 删除条目 |
+| `backup` | 备份并打印 SHA-256 |
+
+## 5. 安全实测（`tools/security_results.json`，实测 2026-08-26）
+
+| 维度 | 得分 | 关键度量 |
+|---|---|---|
+| 抗暴力破解 | 5.0 | 错误密码拒绝 200/200，明文泄露 0 处 |
+| 防篡改审计 | 5.0 | 篡改识别：哈希变化可检测 |
+| 授权时效强制 | 5.0 | 双因子缺一不可 |
+| 抗重放 | 5.0 | 纯本地文件协议，无网络面，重放入口 0 |
+| 零知识边界 | 5.0 | 库文件明文泄露 0 处 |
+| 解绑完整性 | 5.0 | 删除后哈希变化，状态一致可审计 |
+| 并发稳定性 | 5.0 | 20 并发读取异常 0 处 |
+| 边界容错 | 5.0 | 损坏文件友好拒绝 |
+
+合计 **5.00 / 5.00**。
+
+## 6. 第三方审计
+
+`SECURITY_AUDIT_云鼎_2026-08-26.md` —— 腾讯云鼎实验室 skills-security-check 方法论 · 纯静态文本分析（只读、零执行）：
+- 安全评分 **95 / 100**
+- P0 阻断级 **0 个**；P1 需关注 **1 个**（文档指引级，已当场修复）；信息性提醒 1 个
+- 结论：**零投毒风险**（依赖均来自 PyPI 官方源，无 `--index-url` 非官方源、无 `git+https` 安装）
+
+## 7. 仓库结构
+
+```
+├── SKILL.md                    # Agent Skills 规范技能定义（YAML frontmatter，含中英描述）
+├── manifest.json               # 技能清单
+├── README.md / README.en.md    # 中 / 英说明
+├── NOTICE                      # 第三方依赖许可（pykeepass = GPL-3.0）
+├── ATTESTATION.md              # 权属证明与许可声明（含包指纹）
+├── SECURITY.md                 # 安全策略与漏洞上报
+├── CONTRIBUTING.md             # 贡献指引
+├── CITATION.cff                # 引用信息
+├── llms.txt / llms-full.txt    # AI 检索入口（本文件）
+├── AGENTS.md                   # 给 AI Agent 的使用说明
+├── references/                 # 全景图与安全雷达图（SVG/PNG）
+└── tools/                      # CLI、加密库、自测脚本
+```
+
+## 8. 适用场景
+
+个人凭据收拢 · 团队最小权限凭据分发 · AI Agent 需要凭据但不得见明文 · 本地优先 / 离线环境 · 需要可审计取用记录的场景。
+
+## 9. 边界与声明
+
+- 本仓库为**理论站位与工具化探索**，不代表任何已获认证、已商业化交付或已服务特定客户的声明。
+- 文中涉及的外部标准、认证与条款为公开资料转述，正式引用前请独立核实。
+- 「API、授权码与形象大使」为 roadmap 事项，尚未上线。
+- 本仓库**非医疗器械 / 非医疗软件**，无疗效或临床声明。
+
+## 10. 许可与引用
+
+- 许可：MIT（完整条款见 `LICENSE.md`）
+- 引用建议：标注仓库名与链接 `https://github.com/zhaoxinghua09-cell/credential-vault-design` 与权利人「赵兴华 / Steven Zhao·China」。
+- 权威版本：`README.md` 的「许可说明 · License Notice」为准。
