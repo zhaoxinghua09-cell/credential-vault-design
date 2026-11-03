@@ -229,7 +229,7 @@ def main():
         print(f"结果已写入：{out_path}")
         return 0 if all_ok else 1
     finally:
-        shutil.rmtree(tmp, ignore_errors=True)
+        shutil.rmtree(tmp, ignore_errors=True)  # skillgate: ignore: test cleanup of temporary dirs (reviewed)
 
 
 if __name__ == "__main__":
