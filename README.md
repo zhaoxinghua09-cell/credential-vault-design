@@ -1,4 +1,5 @@
 # 统一凭据保险库 · credential-vault-design（本地零知识 · 真实可跑）
+[![Trust Score](https://img.shields.io/badge/Trust%20Score-79%2F100%20B-dfb317.svg)](https://github.com/zhaoxinghua09-cell/skillgate)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
 [![Agent Skill](https://img.shields.io/badge/Agent%20Skill-SKILL.md-blue.svg)](SKILL.md)
@@ -144,3 +145,12 @@ python tools/vault_cli.py --help
 ## 免责声明
 
 本仓库内容为**理论站位与工具化探索**，不代表任何已获认证、已商业化交付或已服务特定客户的声明；文中涉及的外部标准、认证与条款信息为公开资料转述，正式引用前请**独立核实**。API、授权码与形象大使等为路线图（roadmap）事项，尚未上线。
+
+## Ecosystem / 生态闭环
+
+- [awesome-trusted-agents](https://github.com/zhaoxinghua09-cell/awesome-trusted-agents) — 四角度评分精选清单（生态榜单入口）
+- [skill-scorecard](https://github.com/zhaoxinghua09-cell/skill-scorecard) — 四角度评分引擎
+- [lgd-hub](https://github.com/zhaoxinghua09-cell/lgd-hub) — LGD 理论资产统一入口
+- [lgd-skill-marketplace](https://github.com/zhaoxinghua09-cell/lgd-skill-marketplace) — LGD 技能超市总目录
+- [governanceos](https://github.com/zhaoxinghua09-cell/governanceos) — 治理编排枢纽（SPEC→PLAN→GATE→AUDIT→EVO）
+- [skillgate](https://github.com/zhaoxinghua09-cell/skillgate) — 技能信任评分引擎
